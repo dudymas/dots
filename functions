@@ -12,6 +12,10 @@ function ssh-clear() {
     sed -i '' "/$1/d" /Users/jeremy/.ssh/known_hosts
 }
 
+function ssh-id() {
+    ssh-add $HOME/.ssh/${1:?specify a key}
+}
+
 function gh-cd() {
     cd $(ghq list -p $1 | head -n 1)
 }

@@ -2,12 +2,9 @@
 set -o vi
 bindkey '^R' history-incremental-search-backward
 
-# go
-export GOPATH=$HOME/Code/go
-
 # docker
-if boot2docker ip ; then
-    eval $(boot2docker shellinit)
+if boot2docker ip 2>/dev/null 1>/dev/null ; then
+    eval $(boot2docker shellinit 2>/dev/null )
 elif docker-machine active ; then
     eval $(docker-machine env)
 fi
@@ -24,11 +21,11 @@ if [ -e $HOME/fleet.json ] ; then
 fi
 
 if [ -e $HOME/deis.json ] ; then
-    export DEISCTL_TUNNEL=$(jq .fleetctl.tunnel $HOME/fleet.json -r)
+    export DEISCTL_TUNNEL=$(jq .deis.tunnel $HOME/fleet.json -r)
 fi
 
 # venv
 export WORKON_HOME=$HOME/.virtualenvs
 export PROJECT_HOME=$HOME/Code/projects
-source virtualenvwrapper.sh
+[ -e virtualenvwrapper.sh ] && source virtualenvwrapper.sh
 
