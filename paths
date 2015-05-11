@@ -1,0 +1,9 @@
+
+#Rubeh
+export PATH="$PATH:/Users/jeremy/.rvm/gems/ruby-2.1.2/bin:/Users/jeremy/.rvm/gems/ruby-3.1.2@global/bin:/Users/jeremy/.rvm/rubies/ruby-2.1.2/bin:/Users/jeremy/.rvm/bin"
+
+#Misc. bins
+export PATH="$PATH:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/go/bin:/Users/jeremy/Code/go/bin:/Users/jeremy/bin"
+
+#Misc. script paths
+export PATH="$PATH:$HOME/.ghq/github.com/powerline/powerline/scripts"

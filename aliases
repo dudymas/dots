@@ -1,0 +1,6 @@
+#!/bin/bash
+
+alias doc=docker
+alias cmp=docker-compose
+alias dma=docker-machine
+

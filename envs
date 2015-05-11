@@ -1,0 +1,34 @@
+# vi mode
+set -o vi
+bindkey '^R' history-incremental-search-backward
+
+# go
+export GOPATH=$HOME/Code/go
+
+# docker
+if boot2docker ip ; then
+    eval $(boot2docker shellinit)
+elif docker-machine active ; then
+    eval $(docker-machine env)
+fi
+
+# powerline
+powerline-daemon -q
+POWERLINE_BASH_CONTINUATION=1
+POWERLINE_BASH_SELECT=1
+source ~/.ghq/github.com/powerline/powerline/powerline/bindings/zsh/powerline.zsh
+
+# deis/fleet
+if [ -e $HOME/fleet.json ] ; then
+    export FLEETCTL_TUNNEL=$(jq .fleetctl.tunnel $HOME/fleet.json -r)
+fi
+
+if [ -e $HOME/deis.json ] ; then
+    export DEISCTL_TUNNEL=$(jq .fleetctl.tunnel $HOME/fleet.json -r)
+fi
+
+# venv
+export WORKON_HOME=$HOME/.virtualenvs
+export PROJECT_HOME=$HOME/Code/projects
+source virtualenvwrapper.sh
+

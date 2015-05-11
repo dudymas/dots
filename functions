@@ -1,0 +1,26 @@
+#!/bin/bash
+
+. $HOME/Code/dudymas/devops-scripts/os-cli/functions.sh
+. $HOME/Code/dudymas/devops-scripts/os-cli/os_dock.sh
+
+function docker-clean() {
+    echo NAG: hey, I need to add support for docker-volumes!
+    docker rmi $(docker images | grep "^<none>" | awk '{print $3}')
+}
+
+function ssh-clear() {
+    sed -i '' "/$1/d" /Users/jeremy/.ssh/known_hosts
+}
+
+function gh-cd() {
+    cd $(ghq list -p $1 | head -n 1)
+}
+
+function gh-cl() {
+    git clone $(ghq list -p $1 | head -n 1)
+}
+
+function gogs() {
+    git clone git@gogs.service.stack1:$1
+}
+
