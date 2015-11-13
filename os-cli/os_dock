@@ -1,0 +1,112 @@
+function dm-list() {
+    dma ls | grep -v error
+}
+
+function get-dms() {
+    dm-list | grep $1 | awk '{ print $1 }'
+}
+
+function doc-mac() {
+    eval $(docker-machine env $1)
+}
+
+function doc-on() {
+    pattern=$1
+    shift
+    for dm in $(get-dms $pattern) ; do
+        eval $(dma env $dm)
+        echo --- $dm ---
+        doc $@
+    done
+}
+
+function doc-all() {
+    for dm in $(get-dms openstack) ; do
+        dma active $dm
+        eval $(dma env)
+        doc $@
+    done
+}
+
+function remake-all() {
+    for dm in $(get-dms openstack) ; do
+        dma active $dm
+        eval $(dma env)
+        make build
+        make clean $@
+        make deploy $@
+    done
+}
+
+function os_dock_env() {
+    os_dock_bootstrap $@
+    if [[ "$(dma active)" != "" ]] ; then
+        echo "docker has been aliased to notify you that you're working on a different docker host now"
+        alias docker="echo working on $(dma active)@$(dma url) 1>&2 && docker"
+    fi
+}
+
+function os_dock_create() {
+    if [[ $# -lt 1 ]] ; then
+        echo "Usage: os_dock MACHINE_NAME [flavor] "
+        echo "This will prompt you for your password to openstack, but otherwise \
+assumes you have already run os_connect to set other requisite OS vars."
+        echo "After running, your password will be erased and the MACHINE_STORAGE_PATH \
+variable will be set for docker-machine. This path will be used to store TLS keys and machine \
+info."
+        return
+    fi
+    os_dock_env
+    echo "Please enter your Openstack password:"
+    read -rs OS_PASSWORD
+    docker-machine --debug create -d openstack \
+        --openstack-ssh-user ubuntu \
+        --openstack-ip-pool-type nova \
+        --openstack-flavor-name ${2:=m1.small} \
+        --openstack-image-name trusty-taur \
+        $1
+    export OS_PASSWORD=" "
+    os_dock_clear_creds
+}
+
+function os_dock_clear_creds() {
+    while read f ; do
+        sed -i '' -E 's/(Password":")[^"]+/\1/' "$f"
+    done < <(ls $MACHINE_STORAGE_PATH/machines/**/*.json)
+}
+
+function os_dock_join_cluster(){
+    if [[ $# -eq 1 ]] ; then
+        eval $(__get_consul_cmd $@)
+    else
+        echo "Usage: os_dock_join_cluster CLUSTER_SERVER_IP"
+    fi
+}
+
+function __get_consul_cmd() {
+    echo docker run \
+        --name consul \
+        -h $(dma active) \
+        -p :8300:8300 \
+        -p :8301:8301 \
+        -p :8301:8301/udp \
+        -p :8302:8302 \
+        -p :8302:8302/udp \
+        -p :8400:8400 \
+        -p :8500:8500 \
+        -p :53:53/udp \
+        -d progrium/consul \
+        -advertise $(dma ip) -join $1
+}
+
+function os_dock_registrator() {
+    if [[ "$(doc ps | grep 'consul')" == "" ]] ; then
+        echo "First run os_dock_join_cluster or registrator will be angry"
+    else
+        eval $(__get_registrator_cmd)
+    fi
+}
+
+function __get_registrator_cmd() {
+    echo docker run --name registrator -d -v /var/run/docker.sock:/tmp/docker.sock progrium/registrator consul://$(dma ip):8500
+}

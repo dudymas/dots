@@ -1,0 +1,84 @@
+#!/bin/echo Do not execute me. Instead, source me
+
+function os_connect() {
+    if command_exist nova\
+        && command_exist keystone;
+    then
+        __os_set_url
+        __os_set_tenant
+        __os_set_user
+        __os_set_token
+        __os_set_region
+        __os_set_storage
+    fi
+}
+
+function command_exist() {
+    if [ -e "$(which $1)" ] ; then
+        true
+    else
+        if $2 ; then
+            echo "Please install ${1} - ${2}:   pip install python-${1}client==${2}"
+        else
+            echo "Please install ${1}:   pip install python-${1}client"
+        fi
+        false
+    fi
+}
+
+function check_version() {
+    if [[ "$($1 --version 2>&1 )" == $2 ]] ; then
+        true
+    else
+        echo "Please install ${1} - ${2}:   pip install python-${1}client==${2}"
+        false
+    fi
+}
+
+function __os_set_url() {
+    OS_PROTO=${OS_PROTO:=http}
+    OS_HOST=${OS_HOST:?You need to set this}
+    echo "Connecting to $OS_HOST with $OS_PROTO"
+    export OS_AUTH_URL=$OS_PROTO://$OS_HOST:5000/v2.0
+}
+
+function __os_set_tenant() {
+    # With the addition of Keystone we have standardized on the term **tenant**
+    # as the entity that owns the resources.
+    #export OS_TENANT_ID=d48a08ccb7104cf3bdb6577709c8ba21
+    OS_TENANT_DEFAULT=${OS_TENANT_DEFAULT:=internal-development}
+    echo "Select tenant [$OS_TENANT_DEFAULT]"
+    read -r OS_TENANT_NAME
+    export OS_TENANT_NAME=${OS_TENANT_NAME:=internal-development}
+}
+
+function __os_set_user() {
+    # In addition to the owning entity (tenant), openstack stores the entity
+    # performing the action as the **user**.
+    echo "Enter user name [internal-admin]"
+    read -r OS_USERNAME
+    export OS_USERNAME=${OS_USERNAME:=internal-admin}
+}
+
+function __os_set_token() {
+    # With Keystone you pass the keystone password.
+    unset OS_PASSWORD
+    unset OS_AUTH_TOKEN
+    token_info="$(keystone token-get)"
+    export OS_PASSWORD=" " #leave this empty, or else the clients assume you need to type your password in!
+    export OS_AUTH_TOKEN=$(echo "${token_info}" -e | grep \ id\  | awk '{print $4}')
+    token_expiration=$(echo "${token_info}" | grep exp | awk '{print $4}')
+    echo "Your token expires: $token_expiration"
+}
+
+function __os_set_region() {
+    # If your configuration has multiple regions, we set that information here.
+    # OS_REGION_NAME is optional and only valid in certain environments.
+    export OS_REGION_NAME="RegionOne"
+    # Don't leave a blank variable, unset it if it was empty
+    if [ -z "$OS_REGION_NAME" ]; then unset OS_REGION_NAME; fi
+}
+
+function __os_set_storage {
+    export OS_STORAGE_URL=$(nova endpoints | grep swift | grep publicURL | awk '{print $4}')
+}

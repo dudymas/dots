@@ -3,4 +3,11 @@
 alias doc=docker
 alias cmp=docker-compose
 alias dma=docker-machine
+alias tf=terraform
 
+alias os=openstack
+
+alias gws="PATH=/usr/local/opt/coreutils/libexec/gnubin:usr/local/opt/gnu-sed/libexec/gnubin:$PATH $HOME/bin/gws"
+alias woman=eg
+
+unalias gb

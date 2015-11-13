@@ -1,7 +1,21 @@
-#!/bin/bash
+#!/bin/echo Do not execute/subshell me. Source me instead.
 
-. $HOME/Code/dudymas/devops-scripts/os-cli/functions.sh
-. $HOME/Code/dudymas/devops-scripts/os-cli/os_dock.sh
+SCRIPT_DIR=$(dirname $0)
+. $SCRIPT_DIR/os-cli/functions
+. $SCRIPT_DIR/os-cli/os_dock
+. $SCRIPT_DIR/docker.bash.functions
+
+function add-secret() {
+    read -rs TMP
+    export $1=$TMP
+    unset TMP
+}
+
+function jq-reformat() {
+    cp $1{,.bak}
+    echo Backed up to $1.bak
+    cat $1 | jq . > $1
+}
 
 function docker-clean() {
     echo NAG: hey, I need to add support for docker-volumes!
@@ -16,12 +30,28 @@ function ssh-id() {
     ssh-add $HOME/.ssh/${1:?specify a key}
 }
 
-function gh-cd() {
-    cd $(ghq list -p $1 | head -n 1)
+function ssh-passwd {
+    ssh -o PreferredAuthentications=password -o PubkeyAuthentication=no
 }
 
-function gh-cl() {
-    git clone $(ghq list -p $1 | head -n 1)
+function ghq-cd() {
+    if [ $# -eq 0 ] ; then
+        echo Tries to cd into a ghq repo.
+        echo     See: https://github.com/motemen/ghq
+        echo 'Usage: gh-cl <search pattern>'
+    else
+        cd $(ghq list -p $1 | head -n 1)
+    fi
+}
+
+function ghq-cl() {
+    if [ $# -eq 0 ] ; then
+        echo Tries to clone a repo from ghq cache.
+        echo     See: https://github.com/motemen/ghq
+        echo 'Usage: gh-cl <search pattern>'
+    echo
+        git clone $(ghq list -p $1 | head -n 1)
+    fi
 }
 
 function gogs() {

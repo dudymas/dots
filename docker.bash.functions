@@ -1,0 +1,54 @@
+#!/bin/echo Do not excute/subshell me. Source me.
+
+DM_ACTIVE_MACHINE_FILTER=Running
+
+function dm-list() {
+    dma ls | grep -v error
+}
+
+function get-dms() {
+    dm-list | grep $1 | awk '{ print $1 }'
+}
+
+function denv() {
+    eval $(docker-machine env $1)
+}
+
+function drun() {
+    pattern=$1
+    shift
+    for dm in $(get-dms $pattern) ; do
+        eval $(dma env $dm)
+        echo --- $dm ---
+        doc $@
+    done
+}
+
+function drun() {
+    for dm in $(get-dms $DM_ACTIVE_MACHINE_FILTER) ; do
+        dma active $dm
+        eval $(dma env)
+        doc $@
+    done
+}
+
+function remake-all() {
+    for dm in $(get-dms $DM_ACTIVE_MACHINE_FILTER) ; do
+        dma active $dm
+        eval $(dma env)
+        make build
+        make clean $@
+        make deploy $@
+    done
+}
+
+function dmon() {
+    echo "NOTE: machines will be created in $PWD/machines"
+    echo "If you close this shell, be sure to export 'MACHINE_STORAGE_PATH=$PWD/machines' to use this env later."
+    export MACHINE_STORAGE_PATH=$PWD
+}
+
+function dmoff() {
+    echo "NOTE: machines will be created in $HOME/.docker/machine/machines"
+    unset MACHINE_STORAGE_PATH
+}

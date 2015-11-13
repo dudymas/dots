@@ -3,11 +3,9 @@ set -o vi
 bindkey '^R' history-incremental-search-backward
 
 # docker
-if boot2docker ip 2>/dev/null 1>/dev/null ; then
-    eval $(boot2docker shellinit 2>/dev/null )
-elif docker-machine active ; then
-    eval $(docker-machine env)
-fi
+# if docker-machine status dev ; then
+#     eval $(docker-machine env dev)
+# fi
 
 # powerline
 powerline-daemon -q
@@ -27,5 +25,5 @@ fi
 # venv
 export WORKON_HOME=$HOME/.virtualenvs
 export PROJECT_HOME=$HOME/Code/projects
-[ -e virtualenvwrapper.sh ] && source virtualenvwrapper.sh
+source $(which virtualenvwrapper.sh)
 
