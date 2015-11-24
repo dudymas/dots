@@ -4,6 +4,7 @@ SCRIPT_DIR=$(dirname $0)
 . $SCRIPT_DIR/os-cli/functions
 . $SCRIPT_DIR/os-cli/os_dock
 . $SCRIPT_DIR/docker.bash.functions
+. $SCRIPT_DIR/git.bash.functions
 
 function add-secret() {
     read -rs TMP
@@ -17,11 +18,6 @@ function jq-reformat() {
     cat $1 | jq . > $1
 }
 
-function docker-clean() {
-    echo NAG: hey, I need to add support for docker-volumes!
-    docker rmi $(docker images | grep "^<none>" | awk '{print $3}')
-}
-
 function ssh-clear() {
     sed -i '' "/$1/d" /Users/jeremy/.ssh/known_hosts
 }
@@ -32,29 +28,5 @@ function ssh-id() {
 
 function ssh-passwd {
     ssh -o PreferredAuthentications=password -o PubkeyAuthentication=no
-}
-
-function ghq-cd() {
-    if [ $# -eq 0 ] ; then
-        echo Tries to cd into a ghq repo.
-        echo     See: https://github.com/motemen/ghq
-        echo 'Usage: gh-cl <search pattern>'
-    else
-        cd $(ghq list -p $1 | head -n 1)
-    fi
-}
-
-function ghq-cl() {
-    if [ $# -eq 0 ] ; then
-        echo Tries to clone a repo from ghq cache.
-        echo     See: https://github.com/motemen/ghq
-        echo 'Usage: gh-cl <search pattern>'
-    echo
-        git clone $(ghq list -p $1 | head -n 1)
-    fi
-}
-
-function gogs() {
-    git clone git@gogs.service.stack1:$1
 }
 

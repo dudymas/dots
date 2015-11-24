@@ -1,6 +1,15 @@
-#!/bin/echo Do not excute/subshell me. Source me.
+#!/bin/echo Do not execute/subshell me. Source me.
 
 DM_ACTIVE_MACHINE_FILTER=Running
+
+function doc-tags() {
+    if [ "$#" -eq 0 ] ; then
+        echo List tags for an image in hub.docker.com
+        echo 'Usage: doc-tags <image-name>'
+    else
+        curl -s -S "https://registry.hub.docker.com/v2/repositories/$1/tags/" | jq '."results"[]["name"]' |sort
+    fi
+}
 
 function dm-list() {
     dma ls | grep -v error
@@ -52,3 +61,8 @@ function dmoff() {
     echo "NOTE: machines will be created in $HOME/.docker/machine/machines"
     unset MACHINE_STORAGE_PATH
 }
+
+function doc-clean-images() {
+    docker rmi $(docker images -f dangling=true -q)
+}
+

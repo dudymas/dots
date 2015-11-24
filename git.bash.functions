@@ -1,0 +1,34 @@
+#!/bin/echo Do not execute/subshell me. Source me.
+
+function ghq-cd() {
+    if [ $# -eq 0 ] ; then
+        echo Tries to cd into a ghq repo.
+        echo     See: https://github.com/motemen/ghq
+        echo 'Usage: gh-cl <search pattern>'
+    else
+        cd $(ghq list -p $1 | head -n 1)
+    fi
+}
+
+function ghq-cl() {
+    if [ $# -eq 0 ] ; then
+        echo Tries to clone a repo from ghq cache.
+        echo     See: https://github.com/motemen/ghq
+        echo 'Usage: gh-cl <search pattern>'
+    echo
+        git clone $(ghq list -p $1 | head -n 1)
+    fi
+}
+
+function git-clean-pullrequest-branches() {
+    REMOTE=${1:-origin}
+    echo I am going to delete these:
+    prs=$(git branch -a | grep remotes/$REMOTE | sed -E '/HEAD|master/d')
+    echo "${prs}"
+    echo 'Is that okay? [y/N]'
+    read answer
+    if [[ "${answer}" =~ 'y|Y' ]] ; then
+        echo Deleting...
+        echo "${prs}" | git push --delete $REMOTE
+    fi
+}
