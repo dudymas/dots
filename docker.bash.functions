@@ -1,6 +1,7 @@
 #!/bin/echo Do not execute/subshell me. Source me.
 
 DM_ACTIVE_MACHINE_FILTER=Running
+DOCKER_VIM_IMAGE=dudymas/toolbox:vim
 
 function doc-tags() {
     if [ "$#" -eq 0 ] ; then
@@ -8,6 +9,14 @@ function doc-tags() {
         echo 'Usage: doc-tags <image-name>'
     else
         curl -s -S "https://registry.hub.docker.com/v2/repositories/$1/tags/" | jq '."results"[]["name"]' |sort
+    fi
+}
+
+function dvim() {
+    if [ $# -eq 0 ] ; then
+        echo 'Usage: dvim <Container with volumes> <optional file/folder to edit>'
+    else
+        docker run -it --rm --volumes-from $1 $DOCKER_VIM_IMAGE ${@:2}
     fi
 }
 

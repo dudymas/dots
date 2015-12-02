@@ -1,10 +1,14 @@
 #!/bin/bash
 
+#Docker Docker Docker Docker Docker Docker Docker Docker Docker
 alias doc=docker
+alias d=docker
+alias dx='docker exec'
+alias dps='docker ps'
 alias cmp=docker-compose
 alias dma=docker-machine
-alias tf=terraform
 
+alias tf=terraform
 alias os=openstack
 
 alias gws="PATH=/usr/local/opt/coreutils/libexec/gnubin:usr/local/opt/gnu-sed/libexec/gnubin:$PATH $HOME/bin/gws"
