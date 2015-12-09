@@ -23,12 +23,17 @@ function ghq-cl() {
 function git-clean-pullrequest-branches() {
     REMOTE=${1:-origin}
     echo I am going to delete these:
-    prs=$(git branch -a | grep remotes/$REMOTE | sed -E '/HEAD|master/d')
-    echo "${prs}"
+    prs=( $(git branch -a | grep remotes/$REMOTE | sed -E '/HEAD|master/d') )
+    for p in ${prs[@]} ; do
+        echo ${p}
+    done
     echo 'Is that okay? [y/N]'
     read answer
     if [[ "${answer}" =~ 'y|Y' ]] ; then
-        echo Deleting...
-        echo "${prs}" | git push --delete $REMOTE
+        echo 'Deleting...'
+        for p in ${prs[@]} ; do
+            p=$(echo $p | sed "s-remotes/$REMOTE/--")
+            git push --delete $REMOTE $p
+        done
     fi
 }

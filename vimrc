@@ -100,9 +100,9 @@ set foldminlines=3
 "set foldmethod=marker " Fold on the marker
 set foldlevel=2 " Don't autofold anything (but I can still fold manually)
 set foldopen=block,hor,mark,percent,quickfix,tag " what movements open folds
-function! SimpleFoldText() 
+function! SimpleFoldText()
     return getline(v:foldstart).' '
-endfunction 
+endfunction
 "set foldtext=SimpleFoldText() " Custom fold text function (cleaner than default)
 
 set nowrap
@@ -160,13 +160,13 @@ fun! ToggleNERDTree() "{{{
 endfunction "}}}
 
 map <Leader>n :call ToggleNERDTree()<CR>
+let NERDTreeIgnore = ['\.pyc$']
+
 map <Leader>t :GoTest<CR>
 nnoremap ]q :cnext<cr>
 nnoremap [q :cprevious<cr>
 
 nnoremap ,, <C-^>
-
-let NERDTreeIgnore = ['\.pyc$']
 
 if has("multi_byte")
   if &termencoding == ""
@@ -193,6 +193,8 @@ endif
 " let g:airline_symbols.paste = 'Þ'
 " let g:airline_symbols.paste = '∥'
 " let g:airline_symbols.whitespace = 'Ξ'
+
+let g:UltiSnipsExpandTrigger="<c-j>"
 
 set laststatus=2 nu hidden
 let g:airline_powerline_fonts=1
