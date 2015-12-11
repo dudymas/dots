@@ -1,5 +1,7 @@
 #!/bin/echo Do not execute/subshell me. Source me.
 
+__IS_YES='y|Y'
+
 function ghq-cd() {
     if [ $# -eq 0 ] ; then
         echo Tries to cd into a ghq repo.
@@ -29,7 +31,7 @@ function git-clean-pullrequest-branches() {
     done
     echo 'Is that okay? [y/N]'
     read answer
-    if [[ "${answer}" =~ y|Y ]] ; then
+    if [[ "${answer}" =~ $__IS_YES ]] ; then
         echo 'Deleting...'
         for p in ${prs[@]} ; do
             p=$(echo $p | sed "s-remotes/$REMOTE/--")
@@ -47,7 +49,7 @@ function git-setup-pullrequest-branch() {
     if [ $? -ne 0 ] ; then
         echo "Create pull request branch ${REMOTE}/${PULLREQUEST}? [y/N]"
         read answer
-        if [[ "${answer}" =~ y|Y ]] ; then
+        if [[ "${answer}" =~ $__IS_YES ]] ; then
             git push -u $REMOTE ${CURRENT}:$PULLREQUEST
         fi
     fi
@@ -66,14 +68,14 @@ function git-close-pullrequest-branch() {
     CURRENT=$(git rev-parse --abbrev-ref HEAD)
     echo "Push $UPSTREAM to branch $MASTER on ${REMOTE}? [y/N]"
     read answer
-    if [[ "${answer}" =~ y|Y ]] ; then
+    if [[ "${answer}" =~ $__IS_YES ]] ; then
         git push $REMOTE ${UPSTREAM}:${MASTER}
     else
         return 0
     fi
     echo "Would you like to set your upstream back to ${REMOTE}/${MASTER}? [y/N]"
     read answer
-    if [[ "${answer}" =~ y|Y ]] ; then
+    if [[ "${answer}" =~ $__IS_YES ]] ; then
         git branch --set-upstream-to=${REMOTE}/${MASTER} 2>/dev/null
     fi
 }
