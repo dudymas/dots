@@ -35,5 +35,39 @@ function git-clean-pullrequest-branches() {
             p=$(echo $p | sed "s-remotes/$REMOTE/--")
             git push --delete $REMOTE $p
         done
+        echo "You should run 'git remote prune $REMOTE' if you don't need local caches"
+    fi
+}
+
+function git-setup-pullrequest-branch() {
+    PULLREQUEST=${1:?Please specify a branch name for your pull request}
+    REMOTE=${2:-origin}
+    CURRENT=$(git rev-parse --abbrev-ref HEAD)
+    git branch --set-upstream-to=${REMOTE}/${PULLREQUEST} 2>/dev/null
+    if [ $? -ne 0 ] ; then
+        echo "Create pull request branch ${REMOTE}/${PULLREQUEST}? [y/N]"
+        read answer
+        if [[ "${answer}" =~ 'y|Y' ]] ; then
+            git push -u $REMOTE ${CURRENT}:$PULLREQUEST
+        fi
+    fi
+}
+
+function git-close-pullrequest-branch() {
+    MASTER=${1:-master}
+    REMOTE=${2:-origin}
+    UPSTREAM=$(git rev-parse --abbrev-ref --symbolic-full-name @{u})
+    CURRENT=$(git rev-parse --abbrev-ref HEAD)
+    echo "Push $UPSTREAM to branch $MASTER on ${REMOTE}? [y/N]"
+    read answer
+    if [[ "${answer}" =~ 'y|Y' ]] ; then
+        git push $REMOTE ${UPSTREAM}:${MASTER}
+    else
+        return 0
+    fi
+    echo "Would you like to set your upstream back to ${REMOTE}/${MASTER}? [y/N]"
+    read answer
+    if [[ "${answer}" =~ 'y|Y' ]] ; then
+        git branch --set-upstream-to=${REMOTE}/${MASTER} 2>/dev/null
     fi
 }

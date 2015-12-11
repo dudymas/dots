@@ -11,7 +11,15 @@ alias dma=docker-machine
 alias tf=terraform
 alias os=openstack
 
+#git
+alias gcn='git clean -n'
+alias gcn\!='git clean -f'
+alias gpu\!='git push -f'
+alias gpr='git-setup-pullrequest-branch'
+alias gpr\!='git-close-pullrequest-branch'
+
+unalias gb #oh-my-zsh uses this, but gb is a go tool, so conflict!
+
+
 alias gws="PATH=/usr/local/opt/coreutils/libexec/gnubin:usr/local/opt/gnu-sed/libexec/gnubin:$PATH $HOME/bin/gws"
 alias woman=eg
-
-unalias gb
