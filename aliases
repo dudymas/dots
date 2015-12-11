@@ -17,6 +17,7 @@ alias gcn\!='git clean -f'
 alias gpu\!='git push -f'
 alias gpr='git-setup-pullrequest-branch'
 alias gpr\!='git-close-pullrequest-branch'
+alias what-is-upstream='git rev-parse --abbrev-ref --symbolic-full-name @{u}'
 
 unalias gb #oh-my-zsh uses this, but gb is a go tool, so conflict!
 
