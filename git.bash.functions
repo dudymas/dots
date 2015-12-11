@@ -51,6 +51,12 @@ function git-setup-pullrequest-branch() {
             git push -u $REMOTE ${CURRENT}:$PULLREQUEST
         fi
     fi
+    PUSH_DEFAULT=$(git config --global push.default)
+    if [[ "$PUSH_DEFAULT" != "upstream" ]] ; then
+        echo "Uh oh, you do not have your push settings set to 'upstream'"
+        echo "You should run 'git config --global push.default upstream'"
+        echo "Otherwise, when you run 'git push' you might get errors..."
+    fi
 }
 
 function git-close-pullrequest-branch() {
