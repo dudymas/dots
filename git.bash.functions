@@ -22,6 +22,12 @@ function ghq-cl() {
     fi
 }
 
+function git-clone-private() {
+    REMOTE_REPO=${1:?Please specify a repo}
+    REMOTE_HOST=${2:-github.com}
+    git clone git@${REMOTE_HOST}:${REMOTE_REPO}
+}
+
 function git-clean-pullrequest-branches() {
     REMOTE=${1:-origin}
     echo I am going to delete these:

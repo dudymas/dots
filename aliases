@@ -15,11 +15,13 @@ alias os=openstack
 alias gcn='git clean -n'
 alias gcn\!='git clean -f'
 alias gpu\!='git push -f'
+alias ghcl='git-clone-private'
 alias gpr='git-setup-pullrequest-branch'
 alias gpr\!='git-close-pullrequest-branch'
 alias what-is-upstream='git rev-parse --abbrev-ref --symbolic-full-name @{u}'
 
-unalias gb #oh-my-zsh uses this, but gb is a go tool, so conflict!
+unalias gb  #oh-my-zsh uses this, but gb is a go tool, so conflict!
+unalias gclean  #I deem this unsafe atm. It's only safe 80% of the time...
 
 
 alias gws="PATH=/usr/local/opt/coreutils/libexec/gnubin:usr/local/opt/gnu-sed/libexec/gnubin:$PATH $HOME/bin/gws"
