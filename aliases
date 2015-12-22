@@ -12,9 +12,10 @@ alias tf=terraform
 alias os=openstack
 
 #git
+alias gs='git status'
 alias gcn='git clean -n'
 alias gcn\!='git clean -f'
-alias gpu\!='git push -f'
+alias gpu\!='git-push-bravely'
 alias ghcl='git-clone-private'
 alias gpr='git-setup-pullrequest-branch'
 alias gpr\!='git-close-pullrequest-branch'

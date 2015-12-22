@@ -32,6 +32,11 @@ function denv() {
     eval $(docker-machine env $1)
 }
 
+function denv-attach-to-swarm-port() {
+    export DOCKER_HOST=${$DOCKER_HOST%:*}:$1
+    echo DOCKER_HOST=$DOCKER_HOST
+}
+
 function drun() {
     pattern=$1
     shift
@@ -73,5 +78,29 @@ function dmoff() {
 
 function doc-clean-images() {
     docker rmi $(docker images -f dangling=true -q)
+}
+
+function docker-machine-convert-config {
+    if [[ "$(which jq)" == "" ]]; then
+        echo Please install jq \(i.e. brew install jq \)...
+        echo jq is used to parse configs.
+        return
+    fi
+
+    MACHINE_CONFIG=$1
+    NEW_STORE=$2
+    BAD_STORE_JSON_PATH=$3
+    OLD_STORE=$(jq -r "${BAD_STORE_JSON_PATH}" < $MACHINE_CONFIG)
+    echo Updating $MACHINE_CONFIG
+    echo Moving $OLD_STORE to $NEW_STORE
+    sed -i '' "s^$OLD_STORE^$NEW_STORE^g" $MACHINE_CONFIG
+}
+
+function docker-machine-gather-configs {
+    MACHINE_STORAGE_PATH=${MACHINE_STORAGE_PATH:-$PWD}
+    for config in $MACHINE_STORAGE_PATH/machines/*/config.json ; do
+        convert-config $config $MACHINE_STORAGE_PATH '.HostOptions.AuthOptions.StorePath'
+        convert-config $config $MACHINE_STORAGE_PATH '.Driver.StorePath'
+    done
 }
 

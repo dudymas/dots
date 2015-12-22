@@ -85,3 +85,14 @@ function git-close-pullrequest-branch() {
         git branch --set-upstream-to=${REMOTE}/${MASTER} 2>/dev/null
     fi
 }
+
+function git-push-bravely() {
+    if [[ $(what-is-upstream) == "master" ]] ; then
+        echo 'what-is-upstream == "master" ? !!!'
+        echo ' o_O '
+        echo 'NopeNopeNopeNopeNopeNopeNopeNopeNopeNopeNopeNope'
+    else
+        git push -f
+    fi
+}
+
