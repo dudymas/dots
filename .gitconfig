@@ -23,3 +23,7 @@
 	dc = diff --cached
 [core]
 	excludesfile = ~/.dots/.gitignore
+[merge]
+	tool = atom
+[mergetool "atom"]
+	cmd = ~/.dots/atom_merge $MERGED
