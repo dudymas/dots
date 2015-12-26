@@ -139,6 +139,7 @@ endfun
 if has( "autocmd" )
     au FileType go setlocal nocindent
     au FileType md setlocal nocindent
+    au FileType sh setlocal ts=2 sts=2 sw=2 et
     au FileType yaml setlocal ts=2 sts=2 sw=2 et
     au FileType sls setlocal ts=2 sts=2 sw=2 et
     au FileType yml setlocal ts=2 sts=2 sw=2 et
