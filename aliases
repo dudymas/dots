@@ -13,10 +13,15 @@ alias os=openstack
 
 #git
 alias gs='git status'
+alias gcb\!='git checkout -B'
+alias gct='git checkout -t'
+alias gct\!='git checkout -B -t'
+alias gma='git merge --abort'
 alias gcn='git clean -n'
 alias gcn\!='git clean -f'
 alias gpu\!='git-push-bravely'
 alias ghcl='git-clone-private'
+alias gbu='git branch --set-upstream-to'
 alias gpr='git-setup-pullrequest-branch'
 alias gpr\!='git-close-pullrequest-branch'
 alias what-is-upstream='git rev-parse --abbrev-ref --symbolic-full-name @{u}'
