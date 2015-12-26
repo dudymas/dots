@@ -96,11 +96,11 @@ function docker-machine-convert-config {
     sed -i '' "s^$OLD_STORE^$NEW_STORE^g" $MACHINE_CONFIG
 }
 
-function docker-machine-gather-configs {
+function docker-machine-move-configs {
     MACHINE_STORAGE_PATH=${MACHINE_STORAGE_PATH:-$PWD}
     for config in $MACHINE_STORAGE_PATH/machines/*/config.json ; do
-        convert-config $config $MACHINE_STORAGE_PATH '.HostOptions.AuthOptions.StorePath'
-        convert-config $config $MACHINE_STORAGE_PATH '.Driver.StorePath'
+#docker-machine-convert-config $config $MACHINE_STORAGE_PATH '.HostOptions.AuthOptions.StorePath'
+        docker-machine-convert-config $config $MACHINE_STORAGE_PATH '.Driver.StorePath'
     done
 }
 
