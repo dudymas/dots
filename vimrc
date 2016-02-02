@@ -38,6 +38,7 @@ Plugin 'rizzatti/dash.vim'
 "Source control
 Plugin 'tpope/vim-fugitive'
 Plugin 'airblade/vim-gitgutter'
+let g:gitgutter_max_signs = 1000
 "use this with airline?
 let g:airline#extensions#branch#enabled = 1
 
@@ -45,6 +46,9 @@ let g:airline#extensions#branch#enabled = 1
 Plugin 'scrooloose/syntastic'
 Plugin 'honza/vim-snippets' "These are just snippets for ultisnips. no other purpose
 " Plugin 'tomtom/tcomment_vim'
+
+"Cloud and automation
+Plugin 'hashivim/vim-terraform'
 
 "JS
         "NOTE! Tern requires that you call 'npm install' inside its Plugin dir
@@ -139,6 +143,8 @@ endfun
 if has( "autocmd" )
     au FileType go setlocal nocindent
     au FileType md setlocal nocindent
+    au FileType rb setlocal ts=2 sts=2 sw=2 et
+    au FileType ruby setlocal ts=2 sts=2 sw=2 et
     au FileType sh setlocal ts=2 sts=2 sw=2 et
     au FileType yaml setlocal ts=2 sts=2 sw=2 et
     au FileType sls setlocal ts=2 sts=2 sw=2 et
