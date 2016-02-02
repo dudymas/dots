@@ -12,10 +12,11 @@ alias tf=terraform
 alias os=openstack
 
 #git
+alias gca\!='git commit --amend'
 alias gs='git status'
 alias gcb\!='git checkout -B'
 alias gct='git checkout -t'
-alias gct\!='git checkout -B -t'
+alias gct\!='git checkout -f -t'
 alias gma='git merge --abort'
 alias gcn='git clean -n'
 alias gcn\!='git clean -f'
@@ -25,10 +26,15 @@ alias gbu='git branch --set-upstream-to'
 alias gpr='git-setup-pullrequest-branch'
 alias gpr\!='git-close-pullrequest-branch'
 alias what-is-upstream='git rev-parse --abbrev-ref --symbolic-full-name @{u}'
+alias wiu='what-is-upstream'
 
 unalias gb  #oh-my-zsh uses this, but gb is a go tool, so conflict!
 unalias gclean  #I deem this unsafe atm. It's only safe 80% of the time...
 
+if which stat 2>/dev/null 1>/dev/null ; then
+  alias d.="desk ."
+fi
 
+alias tmux="TERM=screen-256color-bce tmux"
 alias gws="PATH=/usr/local/opt/coreutils/libexec/gnubin:usr/local/opt/gnu-sed/libexec/gnubin:$PATH $HOME/bin/gws"
 alias woman=eg

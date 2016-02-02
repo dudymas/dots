@@ -44,7 +44,7 @@ ZSH_THEME="robbyrussell"
 # ZSH_CUSTOM=/path/to/new-custom-folder
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
-plugins=(git ruby python docker docker-compose docker-machine zsh-syntax-highlighting lol nyan z jira)
+plugins=( desk docker docker-compose docker-machine git jira lol nyan python ruby z zsh-syntax-highlighting )
 
 # User configuration
 

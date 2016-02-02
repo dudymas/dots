@@ -1,3 +1,4 @@
+#!/bin/bash
 # vi mode
 set -o vi
 bindkey '^R' history-incremental-search-backward
@@ -27,5 +28,6 @@ fi
 # venv
 #export WORKON_HOME=$HOME/.virtualenvs
 #export PROJECT_HOME=$HOME/Code/projects
-#source $(which virtualenvwrapper.sh)
-
+if which virtualenvwrapper_lazy.sh 2>/dev/null >/dev/null ; then
+  source $(which virtualenvwrapper_lazy.sh)
+fi
