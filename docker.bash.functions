@@ -66,9 +66,13 @@ function remake-all() {
 }
 
 function dmon() {
-    echo "NOTE: machines will be created in $PWD/machines"
-    echo "If you close this shell, be sure to export 'MACHINE_STORAGE_PATH=$PWD/machines' to use this env later."
-    export MACHINE_STORAGE_PATH=$PWD
+    MACHINE_STORAGE_PATH=$PWD
+    if [ $# -ne 0 ] ; then
+        MACHINE_STORAGE_PATH=$MACHINE_STORAGE_PATH/$1
+    fi
+    echo "NOTE: machines will be created in $MACHINE_STORAGE_PATH/machines"
+    echo "If you close this shell, be sure to export 'MACHINE_STORAGE_PATH=$MACHINE_STORAGE_PATH/machines' to use this env later."
+    export MACHINE_STORAGE_PATH
 }
 
 function dmoff() {
