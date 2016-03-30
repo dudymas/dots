@@ -1,5 +1,8 @@
 #!/bin/bash
 
+#for sam... my imaginary tmate friend
+alias vi=vim
+
 #Docker Docker Docker Docker Docker Docker Docker Docker Docker
 alias doc=docker
 alias d=docker
@@ -25,6 +28,7 @@ alias ghcl='git-clone-private'
 alias gbu='git branch --set-upstream-to'
 alias gpr='git-setup-pullrequest-branch'
 alias gpr\!='git-close-pullrequest-branch'
+alias git-clean-merged-branches='git branch -D $(git branch --merged | tail -n +2)'
 alias what-is-upstream='git rev-parse --abbrev-ref --symbolic-full-name @{u}'
 alias wiu='what-is-upstream'
 
@@ -36,5 +40,6 @@ if which stat 2>/dev/null 1>/dev/null ; then
 fi
 
 alias tmux="TERM=screen-256color-bce tmux"
-alias gws="PATH=/usr/local/opt/coreutils/libexec/gnubin:usr/local/opt/gnu-sed/libexec/gnubin:$PATH $HOME/bin/gws"
+#old skool, non-brew install on osx
+alias gws="PATH=/usr/local/opt/coreutils/libexec/gnubin:usr/local/opt/gnu-sed/libexec/gnubin:$PATH /usr/local/bin/gws"
 alias woman=eg
