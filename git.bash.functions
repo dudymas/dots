@@ -86,6 +86,19 @@ function git-close-pullrequest-branch() {
     fi
 }
 
+function git-clean-gone-branches() {
+    local prs=$(git branch -lvv | grep gone | sed -E '/^\*/d' )
+    if [ -z "${prs}" ] ; then return 0 ; fi
+    echo I am going to delete these:
+    echo ${prs}
+    echo -e '\nIs that okay? [y/N]'
+    read answer
+    if [[ "${answer}" =~ $__IS_YES ]] ; then
+        echo 'Deleting...'
+        git branch -D $(echo $prs | awk '{print $1}')
+    fi
+}
+
 function git-push-bravely() {
     if [[ $(what-is-upstream) == "master" ]] ; then
         echo 'what-is-upstream == "master" ? !!!'
