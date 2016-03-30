@@ -9,6 +9,10 @@ bindkey '^R' history-incremental-search-backward
 # fi
 DOCKER_VIM_IMAGE=dudymas/toolbox
 
+# dnvm
+if which dnvm.sh 2>/dev/null >/dev/null ; then
+    source $(which dnvm.sh)
+fi
 
 # powerline
 powerline-daemon -q
