@@ -1,0 +1,22 @@
+#!/bin/bash -c 'echo source this file, do not run it && exit 1'
+
+GPG_ENV_FILE="${HOME}/.gpg-agent-info"
+
+function gpg-start-agent() {
+    gpg-agent --daemon --enable-ssh-support --write-env-file ${GPG_ENV_FILE}
+}
+
+function gpg-env-setup() {
+    gpg-connect-agent
+    gpg-enable-ssh
+}
+
+function gpg-connect-agent() {
+    source ${GPG_ENV_FILE}
+}
+
+function gpg-enable-ssh() {
+    export GPG_AGENT_INFO
+    export SSH_AUTH_SOCK
+    export SSH_AGENT_PID
+}

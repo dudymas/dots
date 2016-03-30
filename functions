@@ -5,6 +5,7 @@ SCRIPT_DIR=$(dirname $0)
 . $SCRIPT_DIR/os-cli/os_dock
 . $SCRIPT_DIR/docker.bash.functions
 . $SCRIPT_DIR/git.bash.functions
+. $SCRIPT_DIR/gpg.functions
 
 function add-secret() {
     read -rs TMP
