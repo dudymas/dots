@@ -31,3 +31,15 @@ function ssh-passwd {
     ssh -o PreferredAuthentications=password -o PubkeyAuthentication=no
 }
 
+if which cowsay 2>/dev/null >/dev/null ; then
+    function random-cowsay {
+          local cows=(/usr/local/share/cows/*.cow)
+          local rand_cow=$(printf "%s\n" "${cows[RANDOM % ${#cows[@]}]}")
+          cowsay -f "${rand_cow}" $@
+    }
+
+# why not map command not found to cowsay?
+    function command_not_found_handler() {
+        random-cowsay $@
+    }
+fi
