@@ -12,6 +12,9 @@ DOCKER_VIM_IMAGE=dudymas/toolbox
 # dnvm
 if which dnvm.sh 2>/dev/null >/dev/null ; then
     source $(which dnvm.sh)
+    if dnvm list >/dev/null; then
+      dnvm use ${DNVM_RUNTIME_VERSION:-1.0.0-rc2-20221} -r coreclr >/dev/null
+    fi
 fi
 
 # powerline

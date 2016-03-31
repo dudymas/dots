@@ -66,6 +66,10 @@ Plugin 'mtscout6/vim-cjsx'
 Plugin 'fatih/vim-go'
 " Plugin 'nsf/gocode', {'rtp': 'vim/'}
 
+" CSharp
+Plugin 'OmniSharp/Omnisharp-vim'
+let g:OmniSharp_selector_ui = 'ctrlp'
+
 "Clojure
 " Plugin 'vim-scripts/foldsearch'
 " Plugin 'tpope/vim-classpath'
