@@ -108,3 +108,6 @@ function docker-machine-move-configs {
     done
 }
 
+function docker-set-api-version() {
+    export DOCKER_API_VERSION=${1:-1.22}
+}

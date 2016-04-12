@@ -10,6 +10,7 @@ alias dx='docker exec'
 alias dps='docker ps'
 alias cmp=docker-compose
 alias dma=docker-machine
+alias dv=docker-set-api-version
 
 alias tf=terraform
 alias os=openstack
