@@ -22,6 +22,18 @@ function ghq-cl() {
     fi
 }
 
+function git-follow-remote(){
+    local remote=${1:-origin}
+    git branch --set-upstream-to=${remote}/$(git_current_branch)
+}
+
+function git-reset-to-remote(){
+    echo "This will blow away this branch, leaving you with only revlist to recover"
+    if confirm "Do you still want to reset back to remote" ; then
+        git checkout $(what-is-upstream)
+    fi
+}
+
 function git-clone-private() {
     REMOTE_REPO=${1:?Please specify a repo}
     REMOTE_HOST=${2:-github.com}
@@ -35,9 +47,7 @@ function git-clean-pullrequest-branches() {
     for p in ${prs[@]} ; do
         echo ${p}
     done
-    echo 'Is that okay? [y/N]'
-    read answer
-    if [[ "${answer}" =~ $__IS_YES ]] ; then
+    if confirm "Is this okay" ; then
         echo 'Deleting...'
         for p in ${prs[@]} ; do
             p=$(echo $p | sed "s-remotes/$REMOTE/--")
@@ -53,9 +63,7 @@ function git-setup-pullrequest-branch() {
     CURRENT=$(git rev-parse --abbrev-ref HEAD)
     git branch --set-upstream-to=${REMOTE}/${PULLREQUEST} 2>/dev/null
     if [ $? -ne 0 ] ; then
-        echo "Create pull request branch ${REMOTE}/${PULLREQUEST}? [y/N]"
-        read answer
-        if [[ "${answer}" =~ $__IS_YES ]] ; then
+        if confirm "Create pull request branch ${REMOTE}/${PULLREQUEST}" ; then
             git push -u $REMOTE ${CURRENT}:$PULLREQUEST
         fi
     fi
@@ -72,16 +80,12 @@ function git-close-pullrequest-branch() {
     REMOTE=${2:-origin}
     UPSTREAM=$(git rev-parse --abbrev-ref --symbolic-full-name @{u})
     CURRENT=$(git rev-parse --abbrev-ref HEAD)
-    echo "Push $UPSTREAM to branch $MASTER on ${REMOTE}? [y/N]"
-    read answer
-    if [[ "${answer}" =~ $__IS_YES ]] ; then
+    if confirm "Push $UPSTREAM to branch $MASTER on ${REMOTE}" ; then
         git push $REMOTE ${UPSTREAM}:${MASTER}
     else
         return 0
     fi
-    echo "Would you like to set your upstream back to ${REMOTE}/${MASTER}? [y/N]"
-    read answer
-    if [[ "${answer}" =~ $__IS_YES ]] ; then
+    if confirm "Would you like to set your upstream back to ${REMOTE}/${MASTER}" ; then
         git branch --set-upstream-to=${REMOTE}/${MASTER} 2>/dev/null
     fi
 }
@@ -91,9 +95,7 @@ function git-clean-gone-branches() {
     if [ -z "${prs}" ] ; then return 0 ; fi
     echo I am going to delete these:
     echo ${prs}
-    echo -e '\nIs that okay? [y/N]'
-    read answer
-    if [[ "${answer}" =~ $__IS_YES ]] ; then
+    if confirm 'Is that okay' ; then
         echo 'Deleting...'
         git branch -D $(echo $prs | awk '{print $1}')
     fi
