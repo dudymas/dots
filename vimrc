@@ -37,6 +37,8 @@ Plugin 'rizzatti/dash.vim'
 
 "Source control
 Plugin 'tpope/vim-fugitive'
+nnoremap <buffer> <silent> cP :exec 'Gpedit '.expand('<cword>')<CR><C-W>H
+
 Plugin 'airblade/vim-gitgutter'
 let g:gitgutter_max_signs = 1000
 "use this with airline?
@@ -91,7 +93,7 @@ let g:clojure_align_multiline_strings = 1
 
 syntax on
 
-let g:syntastic_javascript_checkers = ['jsxhint']
+let g:syntastic_javascript_checkers = ['eslint']
 
 set backspace=indent,eol,start " make backspace a more flexible
 set ruler
@@ -152,7 +154,9 @@ if has( "autocmd" )
     au FileType sh setlocal ts=2 sts=2 sw=2 et
     au FileType yaml setlocal ts=2 sts=2 sw=2 et
     au FileType sls setlocal ts=2 sts=2 sw=2 et
+    au FileType tf setlocal ts=2 sts=2 sw=2 et
     au FileType yml setlocal ts=2 sts=2 sw=2 et
+    au FileType coffee setlocal ts=2 sts=2 sw=2 et
     au FileType jade setlocal ts=2 sts=2 sw=2 et
     au FileType clojure RainbowParenthesesLoadRound
 endif

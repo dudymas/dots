@@ -41,9 +41,9 @@ function git-clone-private() {
 }
 
 function git-clean-pullrequest-branches() {
-    REMOTE=${1:-origin}
+    local REMOTE=${1:-origin} IGNORE_PATTERN=${2:-master}
     echo I am going to delete these:
-    prs=( $(git branch -a | grep remotes/$REMOTE | sed -E '/HEAD|master/d') )
+    prs=( $(git branch -a | grep remotes/$REMOTE | sed -E "/HEAD|$IGNORE_PATTERN/d") )
     for p in ${prs[@]} ; do
         echo ${p}
     done

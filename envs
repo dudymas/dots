@@ -13,7 +13,7 @@ DOCKER_VIM_IMAGE=dudymas/toolbox
 if which dnvm.sh 2>/dev/null >/dev/null ; then
     source $(which dnvm.sh)
     if dnvm list >/dev/null; then
-      dnvm use ${DNVM_RUNTIME_VERSION:-1.0.0-rc2-20221} -r coreclr >/dev/null
+      #dnvm use ${DNVM_RUNTIME_VERSION:-1.0.0-rc2-20221} -r coreclr >/dev/null
     fi
 fi
 
@@ -37,4 +37,12 @@ fi
 #export PROJECT_HOME=$HOME/Code/projects
 if which virtualenvwrapper_lazy.sh 2>/dev/null >/dev/null ; then
   source $(which virtualenvwrapper_lazy.sh)
+fi
+
+#generic avi's
+. $SCRIPT_DIR/api.keys
+
+MARKER_DAT_JUNK=$HOME/.local/share/marker/marker.sh
+if [ -e "$MARKER_DAT_JUNK" ] ; then
+  [[ -s "$MARKER_DAT_JUNK" ]] && source "$MARKER_DAT_JUNK"
 fi

@@ -6,7 +6,7 @@
 	name = Jeremy White
 	email = dudymas@gmail.com
 [push]
-	default = simple
+	default = upstream
 [alias]
 	a = add
 	aa = add -A
@@ -23,7 +23,7 @@
 	dc = diff --cached
 [core]
 	excludesfile = ~/.dots/.gitignore
-[merge]
-	tool = atom
 [mergetool "atom"]
 	cmd = ~/.dots/atom_merge $MERGED
+[rebase]
+	instructionFormat = %an (%cn) : %ar (%cr) | %s

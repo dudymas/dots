@@ -22,7 +22,7 @@ function jq-reformat() {
 }
 
 function ssh-clear() {
-    sed -i '' "/$1/d" /Users/jeremy/.ssh/known_hosts
+    sed -i '' "/$1/d" $HOME/.ssh/known_hosts
 }
 
 function ssh-id() {
