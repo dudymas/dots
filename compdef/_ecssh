@@ -1,0 +1,47 @@
+#compdef ecssh
+
+_profiles(){
+  declare -a profiles
+  profiles=(default $(grep -o -E '\[profile[^]]*' $HOME/.aws/config | cut -d' ' -f2))
+  _describe -t profile 'AWS profile' profiles
+}
+
+_clusters(){
+  declare -a clusters
+  local ecs=(aws --profile $words[2] ecs)
+  local o=(--output text)
+  clusters=($($ecs list-clusters $o | cut -d/ -f2))
+  _describe -t cluster 'ECS Cluster' clusters
+}
+
+_instances(){
+  declare -a instances
+  local ecs=(aws --profile $words[2] ecs)
+  local cluster=(--cluster $words[3])
+  local o=(--output text)
+  instances=($($ecs list-container-instances $cluster $o | cut -d/ -f2))
+  _describe -t instance 'ECS Instance' instances
+}
+
+_tasks(){
+  declare -a tasks
+  declare -a taskArns
+  local ecs=(aws --profile $words[2] ecs)
+  local cluster=(--cluster $words[3])
+  local o=(--output text)
+
+  local arnQuery=(--query 'taskArns[]')
+  taskArns=(--tasks $($ecs list-tasks $cluster $arnQuery $o))
+
+  local taskQuery=(--query 'tasks[].[join(`@`, [overrides.containerOverrides[0].name,containerInstanceArn])][]')
+  tasks=($ecs describe-tasks $cluster $taskArns $taskQuery $o)
+  _describe -t task 'Cluster Tasks' tasks
+}
+
+_arguments \
+    '1:profile:_profiles' \
+    '2:cluster:_clusters' \
+    '3:instance:_instances'
+#    ':container-instance/*:instance:_instances' \
+#    ':task/*:instance:_tasks'
+

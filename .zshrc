@@ -44,9 +44,15 @@ ZSH_THEME="robbyrussell"
 # ZSH_CUSTOM=/path/to/new-custom-folder
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
-plugins=( desk docker docker-compose docker-machine git jira lol nyan python ruby z zsh-syntax-highlighting )
+plugins=( aws desk docker docker-compose kubectl git lol python z )
+
+# Using go-jira now. Deprecate using shell functions
+#plugins=($plugins jira)
 
 # User configuration
+
+#fpath
+fpath=( $HOME/.dots/compdef $fpath )
 
 # export MANPATH="/usr/local/man:$MANPATH"
 

@@ -2,12 +2,13 @@
 
 __IS_YES='y|Y'
 
-SCRIPT_DIR=$(dirname $0)
+SCRIPT_DIR=${SCRIPT_DIR:-$(dirname $0)}
 . $SCRIPT_DIR/os-cli/functions
 . $SCRIPT_DIR/os-cli/os_dock
 . $SCRIPT_DIR/docker.bash.functions
 . $SCRIPT_DIR/git.bash.functions
 . $SCRIPT_DIR/gpg.functions
+. $SCRIPT_DIR/kube.functions
 
 function add-secret() {
     read -rs TMP
@@ -59,20 +60,23 @@ function __find_output {
 function confirm
 {
   if [ $# -gt 2 ] ; then
-    $OUTPUT "Too many arguments for 'confirm()'"
+    $OUTPUT "Too many arguments for 'confirm()'" >&2
     exit 1
   fi
   local default=${2:-N}
-  $OUTPUT "${1}? [${default}]"
+  $OUTPUT "${1}? [${default}]" >&2
   read answer
   if [[ "${answer:-$default}" =~ $__IS_YES ]] ; then
-    $OUTPUT "Okay..."
+    $OUTPUT "Okay..." >&2
     __find_output
     return 0
   else
-    $OUTPUT Cancelling
+    $OUTPUT Cancelling >&2
     __find_output
     return 1
   fi
 }
 
+function aws-vault-exec(){
+    aws-vault exec $1 -- ${@:2}
+}

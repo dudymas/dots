@@ -20,11 +20,14 @@ Plugin 'tpope/vim-dispatch'
 "Editing tweaks
 " Plugin 'drmingdrmer/xptemplate'
 " Plugin 'paradigm/vim-multicursor'
-" Plugin 'Shougo/neocomplete.vim'
-Plugin 'Valloric/YouCompleteMe'
-Plugin 'SirVer/ultisnips'
+" Note: aws-cfn-snippet relies on neocomplete
+Plugin 'Shougo/neocomplete.vim'
+Plugin 'lunarxlark/aws-cfn-snippet.vim'
+" Plugin 'Valloric/YouCompleteMe'
+" Plugin 'SirVer/ultisnips'
 Plugin 'godlygeek/tabular'
 Plugin 'mattn/emmet-vim'
+Plugin 'hrj/vim-DrawIt'
 
 "Project
 Plugin 'scrooloose/nerdtree'
@@ -38,6 +41,9 @@ Plugin 'rizzatti/dash.vim'
 "Source control
 Plugin 'tpope/vim-fugitive'
 nnoremap <buffer> <silent> cP :exec 'Gpedit '.expand('<cword>')<CR><C-W>H
+if has( "autocmd" )
+   au BufReadPost fugitive://* set bufhidden=delete
+endif
 
 Plugin 'airblade/vim-gitgutter'
 let g:gitgutter_max_signs = 1000
@@ -69,8 +75,8 @@ Plugin 'fatih/vim-go'
 " Plugin 'nsf/gocode', {'rtp': 'vim/'}
 
 " CSharp
-Plugin 'OmniSharp/Omnisharp-vim'
-let g:OmniSharp_selector_ui = 'ctrlp'
+"Plugin 'OmniSharp/Omnisharp-vim'
+"let g:OmniSharp_selector_ui = 'ctrlp'
 
 "Clojure
 " Plugin 'vim-scripts/foldsearch'
@@ -79,6 +85,10 @@ let g:OmniSharp_selector_ui = 'ctrlp'
 " Plugin 'guns/vim-clojure-static'
 " Plugin 'kien/rainbow_parentheses.vim'
 " Plugin 'vim-scripts/paredit.vim'
+
+" Rust
+Plugin 'rust-lang/rust.vim'
+" let g:rustfmt_autosave = 1 " doesn't work!
 
 """""""""""""""""""""""""End Plugins
 
@@ -147,6 +157,7 @@ fun! ScratchMarkBuffer()
 endfun
 
 if has( "autocmd" )
+    au! BufRead,BufEnter,BufNewFile Dockerfile.* setlocal ft=Dockerfile
     au FileType go setlocal nocindent
     au FileType md setlocal nocindent
     au FileType rb setlocal ts=2 sts=2 sw=2 et
@@ -214,6 +225,7 @@ let g:UltiSnipsExpandTrigger="<c-j>"
 set laststatus=2 nu hidden
 let g:airline_powerline_fonts=1
 set guifont=Meslo\ LG\ S\ DZ\ Regular\ for\ Powerline:h12
+set diffopt=iwhite,vertical
 
 let g:ctrlp_user_command = 'ag %s -i --nocolor --nogroup --hidden
       \ --ignore .git

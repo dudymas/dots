@@ -1,12 +1,16 @@
 
 #Rubeh
-export PATH="$PATH:$HOME/.rvm/gems/ruby-2.1.2/bin:$HOME/.rvm/gems/ruby-3.1.2@global/bin:$HOME/.rvm/rubies/ruby-2.1.2/bin:$HOME/.rvm/bin"
+export PATH="$PATH:$HOME/.rvm/bin"
 
-# go
-export GOPATH=$HOME/Code/go
+# Rust
+export PATH="$PATH:/Users/jeremywhite/.cargo/bin"
+# useful for some utils:
+export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
+
+# go(lang)
+export GOPATH="${HOME}/.local/go"
+export GOBIN="${HOME}/.local/bin"
 
 #Misc. bins
-export PATH="$PATH:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/go/bin:$GOPATH/bin:$HOME/bin"
+export PATH="$HOME/.local/bin:/usr/local/bin:$PATH:$GOPATH/bin"
 
-#Misc. script paths
-export PATH="$PATH:$HOME/.ghq/github.com/powerline/powerline/scripts"

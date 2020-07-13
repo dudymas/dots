@@ -1,0 +1,8 @@
+#!/bin/echo Do not execute/subshell me. Source me instead.
+
+KUBE_HOME=${KUBE_HOME:-$HOME/.kube}
+
+function kon
+{
+    export KUBECONFIG=$KUBE_HOME/${1}/kubeconfig
+}

@@ -3,6 +3,10 @@
 #for sam... my imaginary tmate friend
 alias vi=vim
 
+# aws
+alias av='aws-vault-exec'
+alias avl='aws-vault exec -d 12h jeremy true'
+
 #Docker Docker Docker Docker Docker Docker Docker Docker Docker
 alias doc=docker
 alias d=docker
@@ -14,12 +18,17 @@ alias dsav=docker-set-api-version
 alias dv='docker volume'
 alias dq='docker run -it --rm'
 
+alias k=kubectl
+alias kak='kubectl apply -k'
+alias kk='kubectl kustomize'
+alias h=helm
 alias tf=terraform
 alias os=openstack
 
 #git
 alias gca\!='git commit --amend'
 alias gs='git status'
+alias gsur='git submodule update --init --recursive'
 alias gcb\!='git checkout -B'
 alias gct='git checkout -t'
 alias gct\!='git checkout -f -t'
@@ -30,11 +39,15 @@ alias gpu\!='git-push-bravely'
 alias ghcl='git-clone-private'
 alias gbu='git branch --set-upstream-to'
 alias grh='git reset --hard'
+alias grk='git reset --keep'
 alias gpr='git-setup-pullrequest-branch'
 alias gpr\!='git-close-pullrequest-branch'
 alias git-clean-merged-branches='git branch -D $(git branch --merged | tail -n +2)'
 alias what-is-upstream='git rev-parse --abbrev-ref --symbolic-full-name @{u}'
 alias wiu='what-is-upstream'
+alias gbdp="git branch -vv | grep 'origin/.*: gone\]' | awk '{print \$1}' | xargs git branch -d"
+alias grc="git for-each-ref --sort=-committerdate --format='%(objectname:short) -> %(refname:short)'|head -n10"
+alias grcl="git for-each-ref --sort=-committerdate --format='%(objectname:short) -> %(refname:short)'|less"
 
 unalias gb  #oh-my-zsh uses this, but gb is a go tool, so conflict!
 unalias gclean  #I deem this unsafe atm. It's only safe 80% of the time...
@@ -45,5 +58,4 @@ fi
 
 alias tmux="TERM=screen-256color-bce tmux"
 #old skool, non-brew install on osx
-alias gws="PATH=/usr/local/opt/coreutils/libexec/gnubin:usr/local/opt/gnu-sed/libexec/gnubin:$PATH /usr/local/bin/gws"
 alias woman=eg
