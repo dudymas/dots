@@ -1,0 +1,15 @@
+add_newline = false
+
+[aws.region_aliases]
+us-east-1 = "us"
+eu-west-1 = "eu"
+
+[kubernetes]
+disabled = false
+symbol = "⛵️ "
+
+[custom.expired_sess]
+command = "echo aws session expired!"
+style = "bg:red"
+when = """ test $(date -j -f %Y-%m-%dT%H:%M:%SZ $AWS_SESSION_EXPIRATION +%s) -lt $[$(date +%s) + 14400] """
+prefix = " warning "
