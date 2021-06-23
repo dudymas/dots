@@ -47,8 +47,9 @@ alias gpr\!='git-close-pullrequest-branch'
 alias git-clean-merged-branches='git branch -D $(git branch --merged | tail -n +2)'
 alias what-is-upstream='git rev-parse --abbrev-ref --symbolic-full-name @{u}'
 alias wiu='what-is-upstream'
-alias gbdp="echo local branches to delete:;git branch -vv | grep 'origin/.*: gone\]' | awk '{print \$1}'"
-alias gbdp\!="git branch -vv | grep 'origin/.*: gone\]' | awk '{print \$1}' | xargs git branch -D"
+# git-branch-delete-gone : 
+alias gbdg="echo branches which are gone and can be deleted:;git branch -vv | grep 'origin/.*: gone\]' | awk '{print \$1}'"
+alias gbdg\!="git branch -vv | grep 'origin/.*: gone\]' | awk '{print \$1}' | xargs git branch -D"
 alias grc="git for-each-ref --sort=-committerdate --format='%(objectname:short) -> %(refname:short)'|head -n10"
 alias grcl="git for-each-ref --sort=-committerdate --format='%(objectname:short) -> %(refname:short)'|less"
 
