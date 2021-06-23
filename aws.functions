@@ -1,0 +1,21 @@
+#!/bin/echo Do not execute/subshell me. Source me instead.
+
+function awp
+{
+    if [ -z "$1" ] ; then
+        unset AWS_PROFILE
+    else
+        export AWS_PROFILE=$1
+        ecs-cli configure --cluster kin-ue2-${1}platform-ecs --region us-east-2 > /dev/null
+    fi
+}
+
+function ssmp
+{
+    local usage target port local_port
+    usage="ssmp target-instance remote-port [local-port]"
+    target=${1?$usage}
+    port=${2?$usage}
+    local_port=${3:-$2}
+    aws ssm start-session --target $target --document-name AWS-StartPortForwardingSession --parameters "{\"portNumber\":[\"${port}\"],\"localPortNumber\":[\"$local_port\"]}"
+}

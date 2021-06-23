@@ -9,6 +9,8 @@ SCRIPT_DIR=${SCRIPT_DIR:-$(dirname $0)}
 . $SCRIPT_DIR/git.bash.functions
 . $SCRIPT_DIR/gpg.functions
 . $SCRIPT_DIR/kube.functions
+. $SCRIPT_DIR/aws.functions
+. $SCRIPT_DIR/compdef/_aws
 
 function add-secret() {
     read -rs TMP
@@ -38,9 +40,7 @@ OUTPUT="echo -e"
 
 if which cowsay 2>/dev/null >/dev/null ; then
     function random-cowsay {
-          local cows=(/usr/local/share/cows/*.cow)
-          local rand_cow=$(printf "%s\n" "${cows[RANDOM % ${#cows[@]}]}")
-          cowsay -f "${rand_cow}" $@
+        cowsay --random $@
     }
 
 # why not map command not found to cowsay?

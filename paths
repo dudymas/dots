@@ -3,7 +3,7 @@
 export PATH="$PATH:$HOME/.rvm/bin"
 
 # Rust
-export PATH="$PATH:/Users/jeremywhite/.cargo/bin"
+export PATH="$PATH:$HOME/.cargo/bin"
 # useful for some utils:
 export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
 
@@ -12,5 +12,5 @@ export GOPATH="${HOME}/.local/go"
 export GOBIN="${HOME}/.local/bin"
 
 #Misc. bins
-export PATH="$HOME/.local/bin:/usr/local/bin:$PATH:$GOPATH/bin"
+export PATH="$HOME/.local/bin:/usr/local/bin:$PATH"
 

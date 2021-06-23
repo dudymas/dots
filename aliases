@@ -6,6 +6,8 @@ alias vi=vim
 # aws
 alias av='aws-vault-exec'
 alias avl='aws-vault exec -d 12h jeremy true'
+alias ecsl='ecs-cli logs --task-id'
+alias ec2s='aws ssm start-session --target'
 
 #Docker Docker Docker Docker Docker Docker Docker Docker Docker
 alias doc=docker
@@ -45,7 +47,8 @@ alias gpr\!='git-close-pullrequest-branch'
 alias git-clean-merged-branches='git branch -D $(git branch --merged | tail -n +2)'
 alias what-is-upstream='git rev-parse --abbrev-ref --symbolic-full-name @{u}'
 alias wiu='what-is-upstream'
-alias gbdp="git branch -vv | grep 'origin/.*: gone\]' | awk '{print \$1}' | xargs git branch -d"
+alias gbdp="echo local branches to delete:;git branch -vv | grep 'origin/.*: gone\]' | awk '{print \$1}'"
+alias gbdp\!="git branch -vv | grep 'origin/.*: gone\]' | awk '{print \$1}' | xargs git branch -D"
 alias grc="git for-each-ref --sort=-committerdate --format='%(objectname:short) -> %(refname:short)'|head -n10"
 alias grcl="git for-each-ref --sort=-committerdate --format='%(objectname:short) -> %(refname:short)'|less"
 

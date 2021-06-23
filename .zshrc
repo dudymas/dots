@@ -9,6 +9,8 @@ set -o vi
 # time that oh-my-zsh is loaded.
 ZSH_THEME="robbyrussell"
 
+HYPHEN_INSENSITIVE="true"
+
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
 
@@ -44,7 +46,7 @@ ZSH_THEME="robbyrussell"
 # ZSH_CUSTOM=/path/to/new-custom-folder
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
-plugins=( aws desk docker docker-compose kubectl git lol python z )
+plugins=( ${plugins} aws docker docker-compose kubectl git fzf lol z )
 
 # Using go-jira now. Deprecate using shell functions
 #plugins=($plugins jira)

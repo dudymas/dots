@@ -21,9 +21,8 @@
 	rr = remote remove
 	m = merge
 	dc = diff --cached
+    lb = !git reflog show --pretty=format:'%gs ~ %gd' --date=relative | grep 'checkout:' | grep -oE '[^ ]+ ~ .*' | awk -F~ '!seen[$1]++' | head -n 10 | awk -F' ~ HEAD@{' '{printf(\"  \\033[33m%s: \\033[37m %s\\033[0m\\n\", substr($2, 1, length($2)-1), $1)}'
 [core]
 	excludesfile = ~/.dots/.gitignore
-[mergetool "atom"]
-	cmd = ~/.dots/atom_merge $MERGED
 [rebase]
 	instructionFormat = %an (%cn) : %ar (%cr) | %s

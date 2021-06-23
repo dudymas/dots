@@ -1,0 +1,37 @@
+#!/bin/echo do not execute this. source me instead
+_nab_ec2_instances() {
+  command aws ec2 describe-instances \
+    --filters Name=tag-key,Values=Name \
+    --query "Reservations[*].Instances[*].{Instance:InstanceId,AZ:Placement.AvailabilityZone,DNS:PrivateDnsName,Name:Tags[?Key=='Name']|[0].Value}" \
+    --output text
+}
+
+_fzf_complete_ec2s() {
+  _fzf_complete --reverse -- "$@" < <(
+    _nab_ec2_instances
+  )
+}
+
+_fzf_complete_ec2s_post() {
+  awk '{if($4) {print $3} else {print $2} }'
+}
+
+_fzf_complete_ssmp() {
+  _fzf_complete --reverse -- "$@" < <(
+    _nab_ec2_instances
+  )
+}
+
+_fzf_complete_ssmp_post() {
+  awk '{if($4) {print $3} else {print $2} }'
+}
+
+_fzf_complete_ecsl() {
+  _fzf_complete --reverse --header-lines=1 -- "$@" < <(
+    command ecs-cli ps
+  )
+}
+
+_fzf_complete_ecsl_post() {
+  cut -d/ -f2
+}

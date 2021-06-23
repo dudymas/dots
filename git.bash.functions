@@ -102,8 +102,9 @@ function git-clean-gone-branches() {
 }
 
 function git-push-bravely() {
-    if [[ $(what-is-upstream) == "master" ]] ; then
-        echo 'what-is-upstream == "master" ? !!!'
+    local ups=$(what-is-upstream)
+    if [[ $ups == "master" || $ups == "main" || $ups == "production" || $ups == "prod" ]] ; then
+        echo 'what-is-upstream == "'$ups'" ? !!!'
         echo ' o_O '
         echo 'NopeNopeNopeNopeNopeNopeNopeNopeNopeNopeNopeNope'
     else

@@ -9,7 +9,8 @@ bindkey '^R' history-incremental-search-backward
 # fi
 DOCKER_VIM_IMAGE=dudymas/toolbox
 
-# ecs
+# AWS
+export AWS_DEFAULT_PROFILE=kin
 export ECSSH_USER=jeremy
 
 # starship
@@ -27,6 +28,18 @@ export PYENV_HOOK_PATH=makeenv.sh
 
 # direnv
 eval "$(direnv hook zsh)"
+
+# pyvenv
+if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi
+
+# rbvenv
+export RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl@1.1)"
+if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
+
+# nvm
+export NVM_DIR="$HOME/.nvm"
+[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && . "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
+[ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && . "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
 
 # GPG foo
 # uncomment if using a tty-style pinentry app
