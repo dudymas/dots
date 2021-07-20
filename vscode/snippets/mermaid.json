@@ -1,0 +1,112 @@
+{
+	"seq": {
+		"prefix": "seq",
+		"body": [
+			"sequenceDiagram",
+			"    participant a as aaaaaa",
+			"    participant b as bbbbbb",
+			"    a->>+b: Hello John, how are you?",
+			"    a->>+b: John, can you hear me?",
+			"    activate b",
+			"    b-->>-a: Hi Alice, I can hear you!",
+			"    b-->>-a: I feel great!",
+			"    deactivate b"
+		],
+		"description": "Sequence Diagram"
+	},
+	"flow chart": {
+		"prefix": "graph",
+		"body": [
+			"graph TD",
+			"    A[Christmas] -->|Get money| B(Go shopping)",
+			"    B --> C{Let me think}",
+			"    C -->|One| D[Laptop]",
+			"    C -->|Two| E[iPhone]",
+			"    C -->|Three| F[fa:fa-car Car]"
+		],
+		"description": "Flow Chart"
+	},
+	"class": {
+		"prefix": "class",
+		"body": [
+			"classDiagram",
+			"    Animal <|-- Duck",
+			"    Animal <|-- Fish",
+			"    Animal <|-- Zebra",
+			"    Animal : +int age",
+			"    Animal : +String gender",
+			"    Animal: +isMammal()",
+			"    Animal: +mate()",
+			"    class Duck{",
+			"      +String beakColor",
+			"      +swim()",
+			"      +quack()",
+			"    }",
+			"    class Fish{",
+			"      -int sizeInFeet",
+			"      -canEat()",
+			"    }",
+			"    class Zebra{",
+			"      +bool is_wild",
+			"      +run()",
+			"    }"
+		],
+		"description": "Class Diagram"
+	},
+	"state diagram": {
+		"prefix": "state",
+		"body": [
+			"stateDiagram-v2",
+			"    [*] --> Still",
+			"    Still --> [*]",
+			"    Still --> Moving",
+			"    Moving --> Still",
+			"    Moving --> Crash",
+			"    Crash --> [*]"
+		],
+		"description": "State Diagram"
+	},
+	"gantt": {
+		"prefix": "gantt",
+		"body": [
+			"gantt",
+			"    title A Gantt Diagram",
+			"    dateFormat  YYYY-MM-DD",
+			"    section Section",
+			"    A task           :a1, 2014-01-01, 30d",
+			"    Another task     :after a1  , 20d",
+			"    section Another",
+			"    Task in sec      :2014-01-12  , 12d",
+			"    another task      : 24d"
+		],
+		"description": "Gantt Chart"
+	},
+	"er diagram": {
+		"prefix": "erd",
+		"body": [
+			"erDiagram",
+			"          CUSTOMER }|..|{ DELIVERY-ADDRESS : has",
+			"          CUSTOMER ||--o{ ORDER : places",
+			"          CUSTOMER ||--o{ INVOICE : \"liable for\"",
+			"          DELIVERY-ADDRESS ||--o{ ORDER : receives",
+			"          INVOICE ||--|{ ORDER : covers",
+			"          ORDER ||--|{ ORDER-ITEM : includes",
+			"          PRODUCT-CATEGORY ||--|{ PRODUCT : contains",
+			"          PRODUCT ||--o{ ORDER-ITEM : \"ordered in\""
+		],
+		"description": "Entity Relationship Diagram"
+	}
+	// Place your snippets for Mermaid here. Each snippet is defined under a snippet name and has a prefix, body and 
+	// description. The prefix is what is used to trigger the snippet and the body will be expanded and inserted. Possible variables are:
+	// $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders. Placeholders with the 
+	// same ids are connected.
+	// Example:
+	// "Print to console": {
+	// 	"prefix": "log",
+	// 	"body": [
+	// 		"console.log('$1');",
+	// 		"$2"
+	// 	],
+	// 	"description": "Log output to console"
+	// }
+}

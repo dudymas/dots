@@ -1,0 +1,31 @@
+{
+    "git.enableSmartCommit": true,
+    "git.autofetch": true,
+    "git.confirmSync": false,
+    "files.autoSave": "afterDelay",
+    "editor.fontFamily": "Fira Code, Monaco, 'Courier New', monospace",
+    "editor.fontLigatures": true,
+    "gitlens.statusBar.enabled": false,
+    "solargraph.commandPath": "/Users/jeremy/.rbenv/shims/solargraph",
+    "workbench.editorAssociations": {
+        "*.ipynb": "jupyter.notebook.ipynb",
+        "git-rebase-todo": "default"
+    },
+    "opa.path": "/Users/jeremy/opa",
+    "githubPullRequests.fileListLayout": "tree",
+    "editor.tabSize": 8,
+    "editor.cursorStyle": "line",
+    "editor.insertSpaces": false,
+    "editor.lineNumbers": "on",
+    "editor.wordSeparators": "/\\()\"':,.;<>~!@#$%^&*|+=[]{}`?-",
+    "editor.wordWrap": "off",
+    "terraform.languageServer": {
+        "external": true,
+        "pathToBinary": "",
+        "args": [
+            "serve"
+        ],
+        "maxNumberOfProblems": 100,
+        "trace.server": "off"
+    }
+}
