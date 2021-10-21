@@ -6,7 +6,6 @@ alias vi=vim
 # aws
 alias av='aws-vault-exec'
 alias avl='aws-vault exec -d 12h jeremy true'
-alias ecsl='ecs-cli logs --task-id'
 alias ec2s='aws ssm start-session --target'
 
 #Docker Docker Docker Docker Docker Docker Docker Docker Docker
@@ -14,7 +13,7 @@ alias doc=docker
 alias d=docker
 alias dx='docker exec'
 alias dps='docker ps'
-alias cmp=docker-compose
+alias cmp='docker compose'
 alias dma=docker-machine
 alias dsav=docker-set-api-version
 alias dv='docker volume'

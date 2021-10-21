@@ -46,7 +46,7 @@ HYPHEN_INSENSITIVE="true"
 # ZSH_CUSTOM=/path/to/new-custom-folder
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
-plugins=( ${plugins} aws docker docker-compose kubectl git fzf lol z )
+plugins=( ${plugins} pyenv aws docker docker-compose kubectl git fzf lol z )
 
 # Using go-jira now. Deprecate using shell functions
 #plugins=($plugins jira)

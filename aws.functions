@@ -1,12 +1,14 @@
 #!/bin/echo Do not execute/subshell me. Source me instead.
 
-function awp
-{
-    if [ -z "$1" ] ; then
+awp () {
+    local profile=${1}
+    saml2aws login
+    if [ -z "$profile" ]
+    then
         unset AWS_PROFILE
     else
-        export AWS_PROFILE=$1
-        ecs-cli configure --cluster kin-ue2-${1}platform-ecs --region us-east-2 > /dev/null
+        export AWS_PROFILE=$profile
+        ecs-cli configure --cluster kin-ue2-${profile}platform-ecs --region us-east-2 > /dev/null
     fi
 }
 
@@ -19,3 +21,8 @@ function ssmp
     local_port=${3:-$2}
     aws ssm start-session --target $target --document-name AWS-StartPortForwardingSession --parameters "{\"portNumber\":[\"${port}\"],\"localPortNumber\":[\"$local_port\"]}"
 }
+
+ecsl() {
+  ecs-cli logs --task-id $@ | tee >(grep -E '^{' | jq .message -r) >(grep -E '^[^{]+') >/dev/null
+}
+

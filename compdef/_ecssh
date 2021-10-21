@@ -1,4 +1,7 @@
 #compdef ecssh
+#
+#Note, this is deprecated stuff from back when I maintained ecs instances in
+#spot fleets and such.
 
 _profiles(){
   declare -a profiles
